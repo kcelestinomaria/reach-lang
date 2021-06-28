@@ -1,13 +1,13 @@
 import {loadStdlib, getConnector} from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
 
-const numOfBuyers = 10;
-
 (async () => {
   const stdlib = await loadStdlib();
   const connector = getConnector();
   const startingBalance = stdlib.parseCurrency(100);
+  const isAlgo = connector == 'ALGO';
 
+  const numOfBuyers = isAlgo ? 4 : 10;
   const accFunder = await stdlib.newTestAccount(startingBalance);
   const accBuyerArray = await Promise.all(
     Array.from({ length: numOfBuyers }, () =>
@@ -20,7 +20,7 @@ const numOfBuyers = 10;
 
   const funderParams = {
     ticketPrice: stdlib.parseCurrency(3),
-    deadline: connector === 'ALGO' ? 4 : 8,
+    deadline: isAlgo ? 3 : 8,
   };
 
   const resultText = (outcome, addr) =>
