@@ -237,7 +237,9 @@ jobs:
       which:
         description: "which example directory"
         type: string
-    executor: standard
+    executor:
+      name: standard
+      class: "medium"
     steps:
     - checkout
     - restore_bin
